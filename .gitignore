@@ -1,0 +1,105 @@
+# =============================================================================
+# Python / Django Backend
+# =============================================================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Django stuff
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Static files
+staticfiles/
+media/
+
+# Machine Learning Models (large files)
+*.h5
+*.hdf5
+*.pkl
+*.joblib
+*.pt
+*.pth
+*.onnx
+
+# =============================================================================
+# Node.js / Next.js Frontend
+# =============================================================================
+
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# Package manager
+bun.lockb
+package-lock.json
+yarn.lock
+
+# =============================================================================
+# Environment & Secrets
+# =============================================================================
+
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# =============================================================================
+# IDE & System
+# =============================================================================
+
+# VSCode
+.vscode/
+
+# JetBrains
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# =============================================================================
+# Testing & Coverage
+# =============================================================================
+
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# =============================================================================
+# Misc
+# =============================================================================
+
+*.pem
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
