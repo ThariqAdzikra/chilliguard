@@ -8,8 +8,8 @@ import { Leaf, Menu, X, Scan, History, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-// Item navigasi
-const itemNavigasi = [
+// Navigation items
+const navItems = [
   { href: "/", label: "Beranda", icon: Home },
   { href: "/scan", label: "Scan", icon: Scan },
   { href: "/riwayat", label: "Riwayat", icon: History },
@@ -17,10 +17,10 @@ const itemNavigasi = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [menuTerbuka, setMenuTerbuka] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Detect scroll untuk efek navbar
+  // Detect scroll for navbar effect
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -30,9 +30,9 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Tutup menu saat route berubah
+  // Close menu on route change
   useEffect(() => {
-    setMenuTerbuka(false);
+    setMenuOpen(false);
   }, [pathname]);
 
   return (
@@ -40,35 +40,37 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={cn(
-        "fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl",
+        "fixed top-0 left-0 right-0 z-50",
         "transition-all duration-300"
       )}
     >
       <nav
         className={cn(
-          "relative px-4 py-3 rounded-2xl",
-          "glass-card shadow-lg",
-          scrolled && "shadow-xl"
+          "max-w-6xl mx-auto mt-4 mx-4 md:mx-auto px-6 py-4 rounded-2xl",
+          "transition-all duration-300",
+          scrolled
+            ? "bg-white/90 backdrop-blur-xl shadow-lg shadow-gray-200/50 border border-gray-100"
+            : "bg-transparent"
         )}
       >
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-3 group">
             <motion.div
-              whileHover={{ rotate: 15 }}
-              className="p-2 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-lg shadow-emerald-500/25"
+              whileHover={{ rotate: 15, scale: 1.05 }}
+              className="p-2.5 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-lg shadow-emerald-500/25"
             >
               <Leaf className="w-5 h-5" />
             </motion.div>
-            <span className="text-lg font-bold text-foreground">
-              Chili<span className="text-gradient">Guard</span>
+            <span className="text-xl font-bold text-gray-900">
+              Chili<span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">Guard</span>
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
-            {itemNavigasi.map((item) => {
-              const aktif = pathname === item.href;
+          <div className="hidden md:flex items-center gap-2">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
               const Icon = item.icon;
 
               return (
@@ -77,11 +79,11 @@ export default function Navbar() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className={cn(
-                      "flex items-center gap-2 px-4 py-2 rounded-xl",
-                      "text-sm font-medium transition-all duration-200",
-                      aktif
-                        ? "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg shadow-emerald-500/25"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      "flex items-center gap-2 px-5 py-2.5 rounded-xl",
+                      "text-sm font-semibold transition-all duration-200",
+                      isActive
+                        ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                     )}
                   >
                     <Icon className="w-4 h-4" />
@@ -97,11 +99,12 @@ export default function Navbar() {
             <Link href="/scan">
               <Button
                 className={cn(
+                  "px-6 py-2.5",
                   "bg-gradient-to-r from-emerald-500 to-emerald-600",
                   "hover:from-emerald-600 hover:to-emerald-700",
                   "text-white font-semibold rounded-xl",
                   "shadow-lg shadow-emerald-500/25",
-                  "transition-all duration-300"
+                  "transition-all duration-300 hover:scale-105"
                 )}
               >
                 <Scan className="w-4 h-4 mr-2" />
@@ -114,18 +117,18 @@ export default function Navbar() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
-            onClick={() => setMenuTerbuka(!menuTerbuka)}
+            className="md:hidden w-10 h-10 rounded-xl hover:bg-gray-100"
+            onClick={() => setMenuOpen(!menuOpen)}
           >
             <AnimatePresence mode="wait">
-              {menuTerbuka ? (
+              {menuOpen ? (
                 <motion.div
                   key="close"
                   initial={{ rotate: -90, opacity: 0 }}
                   animate={{ rotate: 0, opacity: 1 }}
                   exit={{ rotate: 90, opacity: 0 }}
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5 text-gray-700" />
                 </motion.div>
               ) : (
                 <motion.div
@@ -134,7 +137,7 @@ export default function Navbar() {
                   animate={{ rotate: 0, opacity: 1 }}
                   exit={{ rotate: -90, opacity: 0 }}
                 >
-                  <Menu className="w-5 h-5" />
+                  <Menu className="w-5 h-5 text-gray-700" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -143,16 +146,16 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         <AnimatePresence>
-          {menuTerbuka && (
+          {menuOpen && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               className="md:hidden overflow-hidden"
             >
-              <div className="pt-4 pb-2 space-y-2">
-                {itemNavigasi.map((item, index) => {
-                  const aktif = pathname === item.href;
+              <div className="pt-6 pb-2 space-y-2">
+                {navItems.map((item, index) => {
+                  const isActive = pathname === item.href;
                   const Icon = item.icon;
 
                   return (
@@ -165,11 +168,11 @@ export default function Navbar() {
                       <Link
                         href={item.href}
                         className={cn(
-                          "flex items-center gap-3 px-4 py-3 rounded-xl",
-                          "text-sm font-medium transition-all duration-200",
-                          aktif
-                            ? "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white"
-                            : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                          "flex items-center gap-3 px-4 py-3.5 rounded-xl",
+                          "text-sm font-semibold transition-all duration-200",
+                          isActive
+                            ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                         )}
                       >
                         <Icon className="w-5 h-5" />
@@ -183,15 +186,16 @@ export default function Navbar() {
                 <motion.div
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: itemNavigasi.length * 0.1 }}
+                  transition={{ delay: navItems.length * 0.1 }}
                 >
                   <Link href="/scan">
                     <Button
                       className={cn(
-                        "w-full mt-2",
+                        "w-full mt-3 py-3.5",
                         "bg-gradient-to-r from-emerald-500 to-emerald-600",
                         "hover:from-emerald-600 hover:to-emerald-700",
-                        "text-white font-semibold rounded-xl"
+                        "text-white font-semibold rounded-xl",
+                        "shadow-lg shadow-emerald-500/25"
                       )}
                     >
                       <Scan className="w-4 h-4 mr-2" />

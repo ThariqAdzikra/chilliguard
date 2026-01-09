@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <rect width="512" height="512" rx="96" fill="url(#gradient)"/>
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#059669"/>
+    </linearGradient>
+  </defs>
+  <!-- Chili Leaf Icon -->
+  <path d="M256 80c-60 0-120 40-140 100-20 60-10 140 40 180 30 24 70 36 100 36 30 0 70-12 100-36 50-40 60-120 40-180-20-60-80-100-140-100z" fill="#fff" opacity="0.95"/>
+  <path d="M256 100c-50 0-100 35-118 85-18 50-8 115 35 150 26 22 58 30 83 30s57-8 83-30c43-35 53-100 35-150-18-50-68-85-118-85z" fill="#10b981"/>
+  <path d="M256 130c8 40 8 100 0 140" stroke="#059669" stroke-width="8" stroke-linecap="round"/>
+  <path d="M256 150c-30 20-50 60-50 90" stroke="#059669" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <path d="M256 150c30 20 50 60 50 90" stroke="#059669" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <path d="M256 180c-20 15-35 40-35 60" stroke="#059669" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M256 180c20 15 35 40 35 60" stroke="#059669" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <!-- Small sparkle -->
+  <circle cx="180" cy="160" r="8" fill="#fff" opacity="0.6"/>
+</svg>
