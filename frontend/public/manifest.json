@@ -1,0 +1,22 @@
+{
+  "name": "ChiliGuard AI",
+  "short_name": "ChiliGuard",
+  "description": "Deteksi penyakit tanaman cabai menggunakan kecerdasan buatan. Akurat, cepat, dan gratis.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#10b981",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["agriculture", "utilities", "productivity"],
+  "lang": "id-ID",
+  "dir": "ltr"
+}

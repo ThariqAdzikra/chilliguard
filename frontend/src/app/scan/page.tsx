@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowLeft, Leaf, Info } from "lucide-react";
+import { ArrowLeft, Leaf, History } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 
@@ -79,61 +79,63 @@ export default function ScanPage() {
   );
 
   return (
-    <div className="fixed inset-0 bg-slate-950">
+    <div className="fixed inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-black">
       {/* Header */}
       <motion.header
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="absolute top-0 left-0 right-0 z-10 p-4"
+        className="absolute top-0 left-0 right-0 z-20 px-4 py-4 safe-area-top"
       >
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between max-w-lg mx-auto">
+          {/* Back Button */}
           <Link href="/">
             <Button
               variant="ghost"
               size="icon"
-              className="w-10 h-10 rounded-full bg-white/10 text-white hover:bg-white/20"
+              className={cn(
+                "w-12 h-12 rounded-2xl",
+                "bg-white/10 backdrop-blur-md border border-white/20",
+                "text-white hover:bg-white/20 hover:border-white/30",
+                "transition-all duration-300"
+              )}
             >
               <ArrowLeft className="w-5 h-5" />
             </Button>
           </Link>
 
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 text-emerald-400">
-              <Leaf className="w-4 h-4" />
+          {/* Title */}
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-emerald-500/30 to-emerald-600/20 border border-emerald-500/30 backdrop-blur-sm">
+              <Leaf className="w-5 h-5 text-emerald-400" />
             </div>
-            <span className="text-white font-semibold">Scan Daun</span>
+            <div>
+              <h1 className="text-white font-bold text-lg leading-tight">Scan Daun</h1>
+              <p className="text-white/50 text-xs">ChiliGuard AI</p>
+            </div>
           </div>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className="w-10 h-10 rounded-full bg-white/10 text-white hover:bg-white/20"
-          >
-            <Info className="w-5 h-5" />
-          </Button>
+          {/* History Button */}
+          <Link href="/riwayat">
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                "w-12 h-12 rounded-2xl",
+                "bg-white/10 backdrop-blur-md border border-white/20",
+                "text-white hover:bg-white/20 hover:border-white/30",
+                "transition-all duration-300"
+              )}
+            >
+              <History className="w-5 h-5" />
+            </Button>
+          </Link>
         </div>
       </motion.header>
 
-      {/* Scanner */}
-      <div className="absolute inset-0 pt-16 pb-4 px-4">
+      {/* Scanner - Full Screen */}
+      <div className="absolute inset-0 pt-24 pb-0 px-4">
         <Scanner onCapture={handleCapture} sedangMemproses={sedangMemproses} />
       </div>
-
-      {/* Tips */}
-      <motion.div
-        initial={{ y: 50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.5 }}
-        className="absolute bottom-28 left-4 right-4"
-      >
-        <div className="glass p-4 rounded-2xl max-w-md mx-auto">
-          <p className="text-white/70 text-xs text-center">
-            💡 <span className="font-medium text-white/90">Tips:</span> Pastikan
-            pencahayaan cukup dan daun terlihat jelas dalam bingkai untuk hasil
-            yang akurat.
-          </p>
-        </div>
-      </motion.div>
     </div>
   );
 }
