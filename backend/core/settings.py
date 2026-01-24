@@ -7,6 +7,12 @@ dan integrasi TensorFlow untuk deteksi penyakit tanaman cabai.
 
 from pathlib import Path
 import os
+import dj_database_url
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 
 # Path dasar proyek
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,6 +40,7 @@ INSTALLED_APPS = [
     
     # Aplikasi pihak ketiga
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     
     # Aplikasi lokal
@@ -118,10 +125,10 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # =============================================================================
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
+        conn_max_age=600
+    )
 }
 
 
@@ -171,6 +178,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # =============================================================================
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
@@ -187,7 +198,7 @@ REST_FRAMEWORK = {
 # =============================================================================
 
 # Path ke file model .h5
-MODEL_PATH = os.path.join(BASE_DIR, 'api', 'ml_models', 'chiligard_model_v1.h5')
+MODEL_PATH = os.path.join(BASE_DIR, 'api', 'ml_models', 'chiligard_model_v1.keras')
 
 # Kelas penyakit yang dapat dideteksi
 # Label kelas sesuai urutan indeks model (0-8)

@@ -17,7 +17,7 @@ _modelTerlatih = None
 
 def muatModel():
     """
-    Memuat model TensorFlow dari file .h5.
+    Memuat model TensorFlow dari file .keras.
     Model hanya dimuat sekali dan disimpan dalam variabel global.
     
     Returns:
@@ -32,57 +32,16 @@ def muatModel():
     
     if not os.path.exists(jalurModel):
         print(f"[PERINGATAN] File model tidak ditemukan di: {jalurModel}")
-        print("[INFO] Letakkan file model.h5 di folder api/ml_models/")
+        print("[INFO] Letakkan file model.keras di folder api/ml_models/")
         return None
     
-    # Metode 1: Coba load langsung dengan compile=False
     try:
         from tensorflow import keras
-        _modelTerlatih = keras.models.load_model(jalurModel, compile=False)
+        _modelTerlatih = keras.models.load_model(jalurModel)
         print(f"[SUKSES] Model berhasil dimuat dari: {jalurModel}")
         return _modelTerlatih
     except Exception as kesalahan:
-        print(f"[INFO] Load standar gagal, mencoba rebuild arsitektur: {kesalahan}")
-    
-    # Metode 2: Rebuild arsitektur MobileNetV2 sesuai model asli dan load weights
-    try:
-        import tensorflow as tf
-        from tensorflow import keras
-        
-        # Dapatkan jumlah kelas dari settings
-        num_kelas = len(settings.DAFTAR_KELAS_PENYAKIT)
-        ukuran_input = settings.UKURAN_GAMBAR_INPUT
-        
-        # Rebuild arsitektur: MobileNetV2 + Custom Head (sesuai model asli)
-        base_model = keras.applications.MobileNetV2(
-            include_top=False,
-            weights=None,  # Weights akan diload dari h5
-            input_shape=(ukuran_input[0], ukuran_input[1], 3)
-        )
-        
-        # Build model dengan arsitektur yang sama persis dengan model asli
-        model = keras.Sequential([
-            keras.layers.InputLayer(input_shape=(ukuran_input[0], ukuran_input[1], 3)),
-            base_model,
-            keras.layers.GlobalAveragePooling2D(),
-            keras.layers.Dropout(0.2),
-            keras.layers.Dense(256, activation='relu'),  # 256 units sesuai model asli
-            keras.layers.Dense(num_kelas, activation='softmax')  # 9 classes
-        ])
-        
-        # Load weights dari file h5
-        try:
-            model.load_weights(jalurModel)
-            print(f"[SUKSES] Model weights berhasil dimuat dari: {jalurModel}")
-            _modelTerlatih = model
-            return _modelTerlatih
-        except Exception as e:
-            print(f"[ERROR] Gagal load weights: {e}")
-            print("[INFO] Model tidak dapat dimuat dengan benar. Coba export ulang model dengan TensorFlow versi yang sama.")
-            return None
-            
-    except Exception as kesalahan2:
-        print(f"[ERROR] Gagal rebuild model: {kesalahan2}")
+        print(f"[ERROR] Gagal memuat model: {kesalahan}")
         return None
 
 

@@ -4,3 +4,7 @@ django-cors-headers
 tensorflow-cpu
 pillow
 numpy
+
+psycopg2-binary
+dj-database-url
+python-dotenv
